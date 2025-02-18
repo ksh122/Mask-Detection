@@ -1,0 +1,29 @@
+import cv2
+
+from ultralytics import YOLO
+
+model = YOLO("best.pt")
+cap = cv2.VideoCapture(0)
+
+while True:
+
+    ret, frame = cap.read()
+
+    if not ret:
+        print("Failed to grab frame")
+        break
+
+    results = model(frame)
+
+    # Render results on the frame (this will include bounding boxes and labels)
+    frame_with_results = results[0].plot()  # Get the result from the first frame and plot the bounding boxes
+
+    # Display the frame with predictions
+    cv2.imshow("Real-time Object Detection", frame_with_results)
+
+    # Exit on pressing 'x'
+    if cv2.waitKey(1) & 0xFF == ord('x'):
+        break
+
+cap.release()
+cv2.destroyAllWindows()
