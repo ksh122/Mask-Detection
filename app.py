@@ -1,5 +1,5 @@
 import cv2
-
+import ultralytics
 from ultralytics import YOLO
 
 model = YOLO("best.pt")
